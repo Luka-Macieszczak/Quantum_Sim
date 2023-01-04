@@ -106,6 +106,11 @@ impl Matrix {
         new_matrix
     }
 
+    pub fn clone(&self) -> Matrix {
+        let vec: Vec<Vec<Complex<f32>>> = self.rows.clone();
+        Matrix::new(vec)
+    }
+
 }
 
 #[cfg(test)]

@@ -69,6 +69,7 @@ impl Gate {
     Combine 2 tensor products to get the cnot gate
     Each tensor product represents what to do in each state (nothing if the control bit is 0, flip if control is 1)
     Gate is obtained by tensoring I n - 2 many times (where n is the number of qubits), then choosing 2 spots designated by the control bit index and target bit index
+    (Ex let control_qubit = 0, target_qubit = 2, num_qubits = 3: |0><0|⊗I⊗I + |1><1|⊗I⊗X. I is the identity matrix, X is the not matrix, |0> = (1,0), |1> = (0,1))
     This must be done twice for the zero state and the one state of the control bit
     Inputs are zero indexed
     FIX
@@ -128,6 +129,34 @@ impl Gate {
     }
 
     /**
+    Creates a single qubit gate that acts on a quantum register of num_qubits size
+    Process of creating such a gate is similar to the multi qubit cnot but with fewer steps
+    Tensor the identity matrix with itself num_qubits - 1 times, and in that chain tensor the input gate matrix at the desired qubits position
+    (Ex let target_qubit = 2, let num_qubits = 4, let gate = not: ret = I⊗I⊗X⊗I where I is the identity matrix and X is the not matrix)
+    */
+    pub fn multi_single_qubit_gate(target_qubit: i32, num_qubits: i32, gate: Gate) -> Result<Self, i32> {
+        if gate.matrix.rows.len() > 2{
+            return Err(-1)
+        }
+        let mut new_gate_matrix: Matrix = Matrix::new_identity(2);
+        let identity: Matrix = Matrix::new_identity(2);
+        if target_qubit == 0{
+            new_gate_matrix = gate.matrix.clone();
+        }
+
+        for i in 1..num_qubits{
+            if i == target_qubit {
+                new_gate_matrix = new_gate_matrix.tensor_product(&gate.matrix);
+            }
+            else {
+                new_gate_matrix = new_gate_matrix.tensor_product(&identity);
+            }
+        }
+
+        Ok(Self {matrix: new_gate_matrix})
+    }
+
+    /**
     Apply gate to a quantum register
     Quantum gates are represented by complex matrices
     The state of the register is represented by a kronecker product of 2 element vectors (which represent qubits)
@@ -166,7 +195,7 @@ mod tests {
         for i in 0..matrix.rows.len(){
             print!("[ ");
             for j in 0..matrix.rows[i].len(){
-                print!(" {} ", matrix.rows[i][j]);
+                print!(" {} ", matrix.rows[i][j].re);
             }
             print!(" ]\n");
         }
@@ -234,5 +263,31 @@ mod tests {
             }
         }
 
+    }
+
+    #[test]
+    fn test_multi_single(){
+        let gate: Gate = Gate::multi_single_qubit_gate(0,3,Gate::new_not()).unwrap();
+        print_matrix(&gate.matrix);
+
+        let q1: Qubit = Qubit::new_zero_state();
+        let q2: Qubit = Qubit::new_zero_state();
+        let q3: Qubit = Qubit::new_zero_state();
+        let mut register: QuantumRegister = QuantumRegister::new(q1);
+
+        register.add(q2);
+        register.add(q3);
+
+        print_register(&register);
+        print!("\n\n");
+
+        match gate.apply(&mut register){
+            Ok(_) => {
+                print_register(&register)
+            }
+            Err(_) => {
+                print!("ERROR");
+            }
+        }
     }
 }
