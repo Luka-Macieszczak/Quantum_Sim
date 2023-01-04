@@ -83,10 +83,6 @@ impl Gate {
         // Matrix of the not gate
         let not_matrix: Matrix = Matrix::new(vec![vec![Complex::zero(), Complex::one()], vec![Complex::one(), Complex::zero()]]);
 
-        // First qubit may be control or target bit
-        // Increment if necessary
-        let mut start: i32 = 0;
-
         let mut zero_condition_matrix: Matrix = Matrix::new_zero(2);
         let mut one_condition_matrix: Matrix = Matrix::new_zero(2);
 
@@ -108,16 +104,16 @@ impl Gate {
         }
 
         // Apply chain of tensors to each matrix
-        for i in 1..num_qubits{
+        for i in 1..num_qubits {
             if i == control_qubit{
                 zero_condition_matrix = zero_condition_matrix.tensor_product(&zero_state_outer_product);
                 one_condition_matrix = one_condition_matrix.tensor_product(&one_state_outer_product);
             }
-            else if i == target_qubit{
+            else if i == target_qubit {
                 zero_condition_matrix = zero_condition_matrix.tensor_product(&identity);
                 one_condition_matrix = one_condition_matrix.tensor_product(&not_matrix);
             }
-            else{
+            else {
                 zero_condition_matrix = zero_condition_matrix.tensor_product(&identity);
                 one_condition_matrix = one_condition_matrix.tensor_product(&identity);
             }
