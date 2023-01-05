@@ -159,7 +159,7 @@ impl Gate {
     The kronecker product of n many qubits is a vector with 2^n many elements
     Apply the gate by multiplying the register state vector by the gate matrix
     */
-    pub fn apply(self, register: &mut QuantumRegister) -> Result<i32, i32> {
+    pub fn apply(&self, register: &mut QuantumRegister) -> Result<i32, i32> {
         let len: usize = self.matrix.rows.len();
         let mut new_state: Vec<Complex<f32>> = vec![Complex::zero(); len];
 
@@ -263,11 +263,11 @@ mod tests {
 
     #[test]
     fn test_multi_single(){
-        let gate: Gate = Gate::multi_single_qubit_gate(0,3,Gate::new_not()).unwrap();
+        let gate: Gate = Gate::multi_single_qubit_gate(0,3,Gate::new_h()).unwrap();
         print_matrix(&gate.matrix);
 
-        let q1: Qubit = Qubit::new_zero_state();
-        let q2: Qubit = Qubit::new_zero_state();
+        let q1: Qubit = Qubit::new_one_state();
+        let q2: Qubit = Qubit::new_one_state();
         let q3: Qubit = Qubit::new_zero_state();
         let mut register: QuantumRegister = QuantumRegister::new(q1);
 

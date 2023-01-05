@@ -16,8 +16,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/QuantumCircuit.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gates.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gates.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +66,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;Debugger.Rust.DataView&quot;
   }
 }</component>
-  <component name="RunManager" selected="Cargo.Test Gates::tests::test_multi_single">
+  <component name="RunManager" selected="Cargo.Test QuantumCircuit::tests::test_init">
     <configuration name="Test Gates::tests::test_multi_cnot" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="test --package quantum --lib Gates::tests::test_multi_cnot -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -84,23 +86,6 @@
     </configuration>
     <configuration name="Test Gates::tests::test_multi_single" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="test --package quantum --lib Gates::tests::test_multi_single -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test Matrix::tests::test_init" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package quantum --lib Matrix::tests::test_init -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -150,6 +135,23 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test QuantumCircuit::tests::test_init" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package quantum --lib QuantumCircuit::tests::test_init -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Test" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="test --package quantum --lib tests" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -169,11 +171,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test QuantumCircuit::tests::test_init" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_single" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_cnot" />
         <item itemvalue="Cargo.Test Matrix::tests::test_matrix_addition" />
         <item itemvalue="Cargo.Test Matrix::tests::test_matrix_tensor" />
-        <item itemvalue="Cargo.Test Matrix::tests::test_init" />
       </list>
     </recent_temporary>
   </component>
@@ -193,7 +195,7 @@
       <workItem from="1668780976557" duration="13224000" />
       <workItem from="1671898425732" duration="42409000" />
       <workItem from="1672867571947" duration="3361000" />
-      <workItem from="1672871352308" duration="3492000" />
+      <workItem from="1672871352308" duration="6531000" />
     </task>
     <servers />
   </component>
