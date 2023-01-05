@@ -14,6 +14,12 @@ impl Matrix {
         }
     }
 
+    pub fn new_h() -> Self {
+        let mut matrix: Matrix = Matrix::new(vec![vec![Complex::one(), Complex::one()], vec![Complex::one(), Complex::one()*(-1.)]]);
+        matrix.scalar_multiplication(Complex::one() * (1./f32::sqrt(2.)));
+        Self {rows: matrix.rows}
+    }
+
     pub fn new_identity(size: usize) -> Self{
         let mut rows:Vec<Vec<Complex<f32>>> = vec![];
         for i in 0..size{

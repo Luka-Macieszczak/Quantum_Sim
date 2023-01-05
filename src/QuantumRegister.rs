@@ -14,6 +14,14 @@ impl QuantumRegister {
         }
     }
 
+    pub fn new_from_vec(vec: Vec<Complex<f32>>) -> Self {
+        Self {state: Unit::<DVector<Complex<f32>>>::new_normalize(DVector::from_vec(vec))}
+    }
+
+    pub fn new_from_unit_vec(vec: Unit<DVector<Complex<f32>>>) -> Self{
+        Self {state: vec}
+    }
+
     /**
     Add new cubit using Kronecker productSince exactly 1 new qubit is being added, the result will be twice the size as before
     Each entry from the register must be combined with each entry in the cubit by multiplication
@@ -38,6 +46,10 @@ impl QuantumRegister {
 
     pub fn change_state(&mut self, new_state: Vec<Complex<f32>>){
         self.state = Unit::<DVector<Complex<f32>>>::new_normalize(DVector::from_vec(new_state));
+    }
+
+    pub fn clone(&self) -> QuantumRegister {
+        QuantumRegister::new_from_unit_vec(self.state.clone())
     }
 }
 

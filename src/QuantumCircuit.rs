@@ -26,7 +26,7 @@ impl QuantumCircuit {
                     continue
                 }
                 Err(_) => {
-                    print!("Error in applying gate")
+                    print!("Error in applying gate\n")
                 }
             }
         }
@@ -45,21 +45,26 @@ mod tests {
 
     #[test]
     fn test_init() {
-        let gate: Gate = Gate::multi_single_qubit_gate(0, 3, Gate::new_identity()).unwrap();
-        let mut circuit: QuantumCircuit = QuantumCircuit::new(gate, 3);
-        let gate1: Gate = Gate::multi_single_qubit_gate(2, 3, Gate::new_identity()).unwrap();
-        let gate2: Gate = Gate::multi_single_qubit_gate(1, 3, Gate::new_identity()).unwrap();
-        let cnot: Gate = Gate::new_multi_cnot(1,0,3);
+        let num_qubits: i32 = 4;
+        let h: Gate = Gate::new_multi_h(num_qubits);
+        let gate: Gate = Gate::new_multi_cnot(0, 3, num_qubits);
+        let gate1: Gate = Gate::new_multi_cnot(1, 3, num_qubits);
+        let mut circuit: QuantumCircuit = QuantumCircuit::new(h, num_qubits);
+        //let gate1: Gate = Gate::multi_single_qubit_gate(2, num_qubits, Gate::new_identity()).unwrap();
+        //let gate2: Gate = Gate::multi_single_qubit_gate(1, num_qubits, Gate::new_identity()).unwrap();
+        let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
+        circuit.add_gate(gate);
         circuit.add_gate(gate1);
         circuit.add_gate(gate2);
-        circuit.add_gate(cnot);
 
-        let q1: Qubit = Qubit::new_zero_state();
-        let q2: Qubit = Qubit::new_one_state();
+        let q1: Qubit = Qubit::new_one_state();
+        let q2: Qubit = Qubit::new_zero_state();
         let q3: Qubit = Qubit::new_zero_state();
+        let q4: Qubit = Qubit::new_zero_state();
         let mut register: QuantumRegister = QuantumRegister::new(q1);
         register.add(q2);
         register.add(q3);
+        register.add(q4);
         print_register(&register);
         print!("\n\n");
         circuit.run(&mut register);

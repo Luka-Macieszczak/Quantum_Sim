@@ -10,3 +10,4 @@
 - Optimize Matrix implementation
 - Optimize Register implementation
 - Fix up that one method for the multi cnot gate (return a result instead of Self)
+- Add qubit measurements

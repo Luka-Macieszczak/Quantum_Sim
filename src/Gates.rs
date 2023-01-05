@@ -44,8 +44,7 @@ impl Gate {
 
     // Hadamard gate
     pub fn new_h() -> Self {
-        let mut matrix: Matrix = Matrix::new(vec![vec![Complex::one(), Complex::one()], vec![Complex::one(), Complex::one()*(-1.)]]);
-        matrix.scalar_multiplication(Complex::one() * (1./f32::sqrt(2.)));
+        let matrix: Matrix = Matrix::new_h();
         Self {matrix}
     }
     // pi/8 gate. Called pi/8 because of a different written form
@@ -150,6 +149,15 @@ impl Gate {
         }
 
         Ok(Self {matrix: new_gate_matrix})
+    }
+
+    pub fn new_multi_h(num_qubits: i32) -> Self {
+        let mut matrix: Matrix = Matrix::new_h();
+        let h_clone: Matrix = matrix.clone();
+        for _ in 0..num_qubits-1{
+            matrix = matrix.tensor_product(&h_clone);
+        }
+        Self {matrix}
     }
 
     /**
@@ -264,6 +272,32 @@ mod tests {
     #[test]
     fn test_multi_single(){
         let gate: Gate = Gate::multi_single_qubit_gate(0,3,Gate::new_h()).unwrap();
+        print_matrix(&gate.matrix);
+
+        let q1: Qubit = Qubit::new_one_state();
+        let q2: Qubit = Qubit::new_one_state();
+        let q3: Qubit = Qubit::new_zero_state();
+        let mut register: QuantumRegister = QuantumRegister::new(q1);
+
+        register.add(q2);
+        register.add(q3);
+
+        print_register(&register);
+        print!("\n\n");
+
+        match gate.apply(&mut register){
+            Ok(_) => {
+                print_register(&register)
+            }
+            Err(_) => {
+                print!("ERROR");
+            }
+        }
+    }
+
+    #[test]
+    fn test_multi_h() {
+        let gate: Gate = Gate::new_multi_h(3);
         print_matrix(&gate.matrix);
 
         let q1: Qubit = Qubit::new_one_state();
