@@ -26,6 +26,31 @@ impl Qubit {
         Self {state: UnitVector2::new_normalize(Vector2::new(Complex::one() * quaternion.a + Complex::i() * quaternion.b,
                                                              Complex::one() * quaternion.c + Complex::i() * quaternion.d))}
     }
+
+    /**
+    Return a list of qubits all in classical states corresponding to the j'th vector in dirac notation (imagine that j is in binary)
+    |0> => (1, 0), |00> => (1,0,0,0), |00> = |0>⊗|0>, |1> = (0,1)
+    |j> = tensor product of all of it's binary digits
+    */
+    pub fn get_qubits_from_state(mut j: i32, mut num_qubits: i32) -> Vec<Qubit> {
+        let mut vec: Vec<Qubit> = vec![];
+        let total_qubits: i32 = num_qubits.clone();
+        while j > 0 && vec.len() < total_qubits as usize {
+            let cur = j & 1;
+            if cur == 1{
+                vec.push(Qubit::new_one_state());
+            }
+            else if cur == 0 {
+                vec.push(Qubit::new_zero_state());
+            }
+            j = j>>1;
+            num_qubits -= 1;
+        }
+        for _ in 0..num_qubits{
+            vec.push(Qubit::new_zero_state());
+        }
+        vec
+    }
 }
 
 #[cfg(test)]
@@ -50,5 +75,13 @@ mod tests {
         quaternion2.normalize();
 
         assert_eq!(quaternion2.a * one + quaternion2.b * i, qubit.state.x.into())
+    }
+
+    #[test]
+    fn get_from_state_test(){
+        let vec: Vec<Qubit> = Qubit::get_qubits_from_state(5, 3);
+        for i in 0..vec.len(){
+            print!("State: ({}, {})\n", vec[i].state.x, vec[i].state.y);
+        }
     }
 }

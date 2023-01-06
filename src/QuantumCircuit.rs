@@ -46,13 +46,19 @@ mod tests {
     #[test]
     fn test_init() {
         let num_qubits: i32 = 4;
-        let h: Gate = Gate::new_multi_h(num_qubits);
+        let h1: Gate = Gate::multi_single_qubit_gate(0,num_qubits,Gate::new_h()).unwrap();
+        let h2: Gate = Gate::multi_single_qubit_gate(1,num_qubits,Gate::new_h()).unwrap();
+        let h3: Gate = Gate::multi_single_qubit_gate(2,num_qubits,Gate::new_h()).unwrap();
         let gate: Gate = Gate::new_multi_cnot(0, 3, num_qubits);
         let gate1: Gate = Gate::new_multi_cnot(1, 3, num_qubits);
-        let mut circuit: QuantumCircuit = QuantumCircuit::new(h, num_qubits);
+
+        let mut circuit: QuantumCircuit = QuantumCircuit::new(h1, num_qubits);
+
         //let gate1: Gate = Gate::multi_single_qubit_gate(2, num_qubits, Gate::new_identity()).unwrap();
         //let gate2: Gate = Gate::multi_single_qubit_gate(1, num_qubits, Gate::new_identity()).unwrap();
         let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
+        circuit.add_gate(h2);
+        circuit.add_gate(h3);
         circuit.add_gate(gate);
         circuit.add_gate(gate1);
         circuit.add_gate(gate2);
@@ -69,6 +75,21 @@ mod tests {
         print!("\n\n");
         circuit.run(&mut register);
         print_register(&register);
+
+
+        let qubits: Vec<Qubit> = register.get_qubit_norms();
+        print!("\n\n");
+
+        for i in 0..qubits.len(){
+            print!("Qubit State: (x: {}, y: {})\n", qubits[i].state.x, qubits[i].state.y);
+        }
+
+        let res = register.measure();
+        print!("\n\n");
+        print_register(&register);
+        print!("\n\nRes: {}", res);
+
+
 
     }
 

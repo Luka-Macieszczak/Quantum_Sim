@@ -297,16 +297,14 @@ mod tests {
 
     #[test]
     fn test_multi_h() {
-        let gate: Gate = Gate::new_multi_h(3);
+        let gate: Gate = Gate::new_multi_h(2);
         print_matrix(&gate.matrix);
 
-        let q1: Qubit = Qubit::new_one_state();
-        let q2: Qubit = Qubit::new_one_state();
-        let q3: Qubit = Qubit::new_zero_state();
+        let q1: Qubit = Qubit::new_zero_state();
+        let q2: Qubit = Qubit::new_zero_state();
         let mut register: QuantumRegister = QuantumRegister::new(q1);
 
         register.add(q2);
-        register.add(q3);
 
         print_register(&register);
         print!("\n\n");

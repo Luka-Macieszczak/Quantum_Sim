@@ -1,7 +1,8 @@
-use nalgebra::{Complex, DVector, Unit};
+use nalgebra::{Complex, DVector, Normed, Unit};
 use crate::Qubit::Qubit;
 use num_traits::One;
 use num_traits::Zero;
+use rand::Rng;
 
 pub(crate) struct QuantumRegister {
     pub state: Unit<DVector<Complex<f32>>>
@@ -11,6 +12,14 @@ impl QuantumRegister {
     pub fn new(qubit: Qubit) -> Self {
         Self{
             state: Unit::<DVector<Complex<f32>>>::new_normalize(DVector::from_vec(vec![qubit.state.x.into(), qubit.state.y.into()]))
+        }
+    }
+
+    pub fn new_from_int(index: usize, size: usize) -> Self {
+        let mut state: Vec<Complex<f32>> = vec![Complex::zero() ; size];
+        state[index] = Complex::one();
+        Self {
+            state: Unit::<DVector<Complex<f32>>>::new_normalize(DVector::from_vec(state))
         }
     }
 
@@ -33,6 +42,68 @@ impl QuantumRegister {
             new_vec[i] = self.state[i/2] * qubit.state[i%2];
         }
         self.state = Unit::<DVector<Complex<f32>>>::new_normalize(DVector::from_vec(new_vec));
+    }
+    /**
+    Measure the quantum register and collapse it's state onto the outcome of the measurement
+    Return an integer corresponding to the state of the qubits in the classical state
+    */
+    pub fn measure(&mut self) -> i32 {
+        let rng = rand::thread_rng().gen_range(0. .. 1.);
+        let mut current_probability = 0.;
+        let mut new_state: Vec<Complex<f32>> = vec![];
+        for i in 0..self.state.len(){
+            let norm: f32 = self.state[i].norm();
+            current_probability += norm;
+            if current_probability >= rng{
+                new_state.push(Complex::one());
+                new_state.append(&mut vec![Complex::zero() ; self.state.len() - i - 1]);
+                self.change_state(new_state);
+                return i as i32
+            } else {
+                new_state.push(Complex::zero());
+            }
+        }
+        -1
+    }
+    /**
+    Peak at a possible measurement value of the state of the qubits but don't collapse the state
+    */
+    pub fn peak(&self) -> i32 {
+        let rng = rand::thread_rng().gen_range(0. .. 1.);
+        let mut current_probability = 0.;
+        for i in 0..self.state.len(){
+            let norm: f32 = self.state[i].norm();
+            current_probability += norm;
+            if current_probability >= rng{
+                return i as i32
+            }
+        }
+        -1
+    }
+
+    /**
+    Gets the state of each individual qubit by adding the norm of each element in the register that corresponds to each qubit
+    */
+    pub fn get_qubit_norms(&self) -> Vec<Qubit> {
+        let mut vec: Vec<Qubit> = vec![];
+        for i in 0..(self.state.len() as f32).log2() as i32{
+            let mut x1: Complex<f32> = Complex::zero();
+            let mut x2: Complex<f32> = Complex::zero();
+            for j in 0..self.state.len(){
+                // Need to access pow method
+                let d: i32 = 2;
+
+                let divider: i32 = (self.state.len() as i32 / d.pow(i as u32));
+                if (j as i32 / divider) % 2 == 0{
+                    x1 += self.state[j].norm();
+                }
+                else {
+                    x2 += self.state[j].norm();
+                }
+            }
+            vec.push(Qubit::new_from_vec(vec![x1, x2]))
+        }
+        vec
     }
 
     /**
@@ -90,5 +161,7 @@ mod tests {
         for num in register.state.iter(){
             print!("num: {}\n", num.re)
         }
+
+
     }
 }

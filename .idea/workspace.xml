@@ -18,9 +18,9 @@
     <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Gates.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gates.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Matrix.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QuantumCircuit.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuantumCircuit.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QuantumRegister.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuantumRegister.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Qubit.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Qubit.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,8 +119,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test Matrix::tests::test_matrix_addition" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package quantum --lib Matrix::tests::test_matrix_addition -- --exact" />
+    <configuration name="Test QuantumCircuit::tests::test_init" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package quantum --lib QuantumCircuit::tests::test_init -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -136,8 +136,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test QuantumCircuit::tests::test_init" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package quantum --lib QuantumCircuit::tests::test_init -- --exact" />
+    <configuration name="Test Qubit::tests::get_from_state_test" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package quantum --lib Qubit::tests::get_from_state_test -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -174,9 +174,9 @@
       <list>
         <item itemvalue="Cargo.Test QuantumCircuit::tests::test_init" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_h" />
+        <item itemvalue="Cargo.Test Qubit::tests::get_from_state_test" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_single" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_cnot" />
-        <item itemvalue="Cargo.Test Matrix::tests::test_matrix_addition" />
       </list>
     </recent_temporary>
   </component>
@@ -196,7 +196,7 @@
       <workItem from="1668780976557" duration="13224000" />
       <workItem from="1671898425732" duration="42409000" />
       <workItem from="1672867571947" duration="3361000" />
-      <workItem from="1672871352308" duration="10425000" />
+      <workItem from="1672871352308" duration="20761000" />
     </task>
     <servers />
   </component>
