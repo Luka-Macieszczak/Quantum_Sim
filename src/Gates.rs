@@ -271,7 +271,9 @@ mod tests {
 
     #[test]
     fn test_multi_single(){
-        let gate: Gate = Gate::multi_single_qubit_gate(0,3,Gate::new_h()).unwrap();
+        let gate: Gate = Gate::multi_single_qubit_gate(0,3,Gate::new_identity()).unwrap();
+        let gate1: Gate = Gate::multi_single_qubit_gate(1,3,Gate::new_h()).unwrap();
+        let gate2: Gate = Gate::multi_single_qubit_gate(2,3,Gate::new_h()).unwrap();
         print_matrix(&gate.matrix);
 
         let q1: Qubit = Qubit::new_one_state();
@@ -293,6 +295,33 @@ mod tests {
                 print!("ERROR");
             }
         }
+        print!("\n\n");
+        match gate1.apply(&mut register){
+            Ok(_) => {
+                print_register(&register)
+            }
+            Err(_) => {
+                print!("ERROR");
+            }
+        }
+        print!("\n\n");
+        match gate2.apply(&mut register){
+            Ok(_) => {
+                print_register(&register)
+            }
+            Err(_) => {
+                print!("ERROR");
+            }
+        }
+        print!("\n\n");
+
+        let vec: Vec<Qubit> = register.get_qubit_norms();
+        for i in 0..vec.len(){
+            print!("Qubit State: (x: {}, y: {})\n", vec[i].state.x, vec[i].state.y);
+        }
+
+
+
     }
 
     #[test]

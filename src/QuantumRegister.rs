@@ -83,6 +83,11 @@ impl QuantumRegister {
 
     /**
     Gets the state of each individual qubit by adding the norm of each element in the register that corresponds to each qubit
+    Each element in a register is a product of some qubit state vector elements (i.e. (x1y1, x1y2, x2y1, x2y2))
+    Every x1 is in the 1st half, and every x2 is in the 2nd half. Every y1 is in the first and 3rd quarter, every y2 is in the 2nd and 4th quarter
+    The position of each state element alternates every k/(2^i) where k is the length of the register and i is the ith qubit added
+    After a gate is applied, the state is a linear combination of all of the elements of the register, which are all products of the original qubit state elements
+    Factoring out each qubit state element and taking the sum of the norms of its positions in the register following the alternating rule will give the qubit state element after the gate has been applied
     */
     pub fn get_qubit_norms(&self) -> Vec<Qubit> {
         let mut vec: Vec<Qubit> = vec![];
@@ -92,8 +97,10 @@ impl QuantumRegister {
             for j in 0..self.state.len(){
                 // Need to access pow method
                 let d: i32 = 2;
+                let divider: i32 = (self.state.len() as i32 / d.pow(i as u32 + 1));
 
-                let divider: i32 = (self.state.len() as i32 / d.pow(i as u32));
+                print!("Condition: {}\n", j as i32 / divider);
+
                 if (j as i32 / divider) % 2 == 0{
                     x1 += self.state[j].norm();
                 }

@@ -15,13 +15,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gates.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gates.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuantumCircuit.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuantumCircuit.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuantumRegister.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuantumRegister.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Qubit.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Qubit.rs" afterDir="false" />
-    </list>
+    <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -196,7 +190,7 @@
       <workItem from="1668780976557" duration="13224000" />
       <workItem from="1671898425732" duration="42409000" />
       <workItem from="1672867571947" duration="3361000" />
-      <workItem from="1672871352308" duration="20761000" />
+      <workItem from="1672871352308" duration="22067000" />
     </task>
     <servers />
   </component>

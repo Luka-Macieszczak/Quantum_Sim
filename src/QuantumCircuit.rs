@@ -46,22 +46,22 @@ mod tests {
     #[test]
     fn test_init() {
         let num_qubits: i32 = 4;
-        let h1: Gate = Gate::multi_single_qubit_gate(0,num_qubits,Gate::new_h()).unwrap();
+        let h1: Gate = Gate::multi_single_qubit_gate(0,num_qubits,Gate::new_identity()).unwrap();
         let h2: Gate = Gate::multi_single_qubit_gate(1,num_qubits,Gate::new_h()).unwrap();
         let h3: Gate = Gate::multi_single_qubit_gate(2,num_qubits,Gate::new_h()).unwrap();
         let gate: Gate = Gate::new_multi_cnot(0, 3, num_qubits);
-        let gate1: Gate = Gate::new_multi_cnot(1, 3, num_qubits);
+        //let gate1: Gate = Gate::new_multi_cnot(1, 3, num_qubits);
 
         let mut circuit: QuantumCircuit = QuantumCircuit::new(h1, num_qubits);
 
         //let gate1: Gate = Gate::multi_single_qubit_gate(2, num_qubits, Gate::new_identity()).unwrap();
         //let gate2: Gate = Gate::multi_single_qubit_gate(1, num_qubits, Gate::new_identity()).unwrap();
-        let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
+        //let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
         circuit.add_gate(h2);
         circuit.add_gate(h3);
         circuit.add_gate(gate);
-        circuit.add_gate(gate1);
-        circuit.add_gate(gate2);
+        //circuit.add_gate(gate1);
+        //circuit.add_gate(gate2);
 
         let q1: Qubit = Qubit::new_one_state();
         let q2: Qubit = Qubit::new_zero_state();
