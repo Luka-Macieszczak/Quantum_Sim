@@ -49,8 +49,14 @@ impl Gate {
     }
     // pi/8 gate. Called pi/8 because of a different written form
     pub fn new_t() -> Self{
-        let num: Complex<f32> = (Complex::one() * f32::e()).powc(Complex::i()/(4.)*f32::pi());
-        let mut matrix: Matrix = Matrix::new(vec![vec![Complex::one(), Complex::zero()], vec![Complex::zero(), num]]);
+        Gate::new_phase_rotation(0.125)
+    }
+
+    // Phase rotation gate
+    pub fn new_phase_rotation(phase: f32) -> Self {
+        let mut matrix: Matrix = Matrix::new_zero(2);
+        matrix.rows[0][0] = Complex::one();
+        matrix.rows[1][1] = (Complex::one() * f32::e()).powc(Complex::i()*2.*f32::pi()*phase);
         Self {matrix}
     }
 
@@ -64,23 +70,14 @@ impl Gate {
         Self {matrix}
     }
 
-    /**
-    Combine 2 tensor products to get the cnot gate
-    Each tensor product represents what to do in each state (nothing if the control bit is 0, flip if control is 1)
-    Gate is obtained by tensoring I n - 2 many times (where n is the number of qubits), then choosing 2 spots designated by the control bit index and target bit index
-    (Ex let control_qubit = 0, target_qubit = 2, num_qubits = 3: |0><0|⊗I⊗I + |1><1|⊗I⊗X. I is the identity matrix, X is the not matrix, |0> = (1,0), |1> = (0,1))
-    This must be done twice for the zero state and the one state of the control bit
-    Inputs are zero indexed
-    FIX
-    */
-    pub fn new_multi_cnot(control_qubit: i32, target_qubit: i32, num_qubits: i32) -> Self{
+    pub fn new_multi_controlled(control_qubit: i32, target_qubit: i32, num_qubits: i32, gate: Gate)  -> Self{
         let identity: Matrix = Matrix::new_identity(2);
         // Outer product of a classical 0 bit in vector representation
         let zero_state_outer_product = Matrix::new(vec![vec![Complex::one(), Complex::zero()], vec![Complex::zero(), Complex::zero()]]);
         // Outer product of a classical 1 bit in vector representation
         let one_state_outer_product = Matrix::new(vec![vec![Complex::zero(), Complex::zero()], vec![Complex::zero(), Complex::one()]]);
         // Matrix of the not gate
-        let not_matrix: Matrix = Matrix::new(vec![vec![Complex::zero(), Complex::one()], vec![Complex::one(), Complex::zero()]]);
+        let target_matrix: Matrix = gate.matrix.clone();
 
         let mut zero_condition_matrix: Matrix = Matrix::new_zero(2);
         let mut one_condition_matrix: Matrix = Matrix::new_zero(2);
@@ -90,10 +87,8 @@ impl Gate {
             one_condition_matrix.rows[1][1] = Complex::one();
         }
         else if target_qubit == 0 {
-            zero_condition_matrix.rows[1][0] = Complex::one();
-            zero_condition_matrix.rows[0][1] = Complex::one();
-            one_condition_matrix.rows[1][0] = Complex::one();
-            one_condition_matrix.rows[0][1] = Complex::one();
+            zero_condition_matrix = gate.matrix.clone();
+            one_condition_matrix = gate.matrix.clone();
         }
         else {
             zero_condition_matrix.rows[0][0] = Complex::one();
@@ -110,7 +105,7 @@ impl Gate {
             }
             else if i == target_qubit {
                 zero_condition_matrix = zero_condition_matrix.tensor_product(&identity);
-                one_condition_matrix = one_condition_matrix.tensor_product(&not_matrix);
+                one_condition_matrix = one_condition_matrix.tensor_product(&target_matrix);
             }
             else {
                 zero_condition_matrix = zero_condition_matrix.tensor_product(&identity);
@@ -121,6 +116,19 @@ impl Gate {
         Self {
             matrix: Matrix::matrix_addition(zero_condition_matrix, one_condition_matrix).unwrap()
         }
+    }
+
+    /**
+    Combine 2 tensor products to get the cnot gate
+    Each tensor product represents what to do in each state (nothing if the control bit is 0, flip if control is 1)
+    Gate is obtained by tensoring I n - 2 many times (where n is the number of qubits), then choosing 2 spots designated by the control bit index and target bit index
+    (Ex let control_qubit = 0, target_qubit = 2, num_qubits = 3: |0><0|⊗I⊗I + |1><1|⊗I⊗X. I is the identity matrix, X is the not matrix, |0> = (1,0), |1> = (0,1))
+    This must be done twice for the zero state and the one state of the control bit
+    Inputs are zero indexed
+    FIX
+    */
+    pub fn new_multi_cnot(control_qubit: i32, target_qubit: i32, num_qubits: i32) -> Self{
+        Gate::new_multi_controlled(control_qubit, target_qubit, num_qubits, Gate::new_not())
     }
 
     /**
@@ -247,7 +255,7 @@ mod tests {
         let gate: Gate = Gate::new_multi_cnot(0,2,3);
         print_matrix(&gate.matrix);
 
-        let q1: Qubit = Qubit::new_zero_state();
+        let q1: Qubit = Qubit::new_one_state();
         let q2: Qubit = Qubit::new_one_state();
         let q3: Qubit = Qubit::new_zero_state();
         let mut register: QuantumRegister = QuantumRegister::new(q1);
@@ -355,6 +363,28 @@ mod tests {
             }
             Err(_) => {
                 print!("ERROR");
+            }
+        }
+
+        print!("\n\n");
+
+        match gate.apply(&mut register){
+            Ok(_) => {
+                print_register(&register)
+            }
+            Err(_) => {
+                print!("ERROR");
+            }
+        }
+    }
+
+    #[test]
+    fn test_multi_controlled(){
+        let gate1: Gate = Gate::new_multi_controlled(0, 2, 3, Gate::new_not());
+        let gate2: Gate = Gate::new_multi_cnot(0, 2, 3);
+        for i in 0..gate2.matrix.rows.len(){
+            for j in 0..gate2.matrix.rows.len(){
+                assert_eq!(gate1.matrix.rows[i][j], gate2.matrix.rows[i][j])
             }
         }
     }

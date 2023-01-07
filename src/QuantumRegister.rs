@@ -32,7 +32,7 @@ impl QuantumRegister {
     }
 
     /**
-    Add new cubit using Kronecker productSince exactly 1 new qubit is being added, the result will be twice the size as before
+    Add new cubit using Kronecker product since exactly 1 new qubit is being added, the result will be twice the size as before
     Each entry from the register must be combined with each entry in the cubit by multiplication
     This is very inefficient (which should be obvious since this is not running on a quantum computer)
     */

@@ -57,21 +57,21 @@ impl Qubit {
     Measure individual qubit and collapse quantum state
     return a zero or 1 corresponding to it's classical state
     */
+
     pub fn measure(&mut self) -> i32{
         let rng = rand::thread_rng().gen_range(0. .. 1.);
-        if rng <= self.state.x.norm(){
-            self.state.x = Complex::one();
-            self.state.y = Complex::zero();
+        return if rng <= self.state.x.norm() {
+            self.state = UnitVector2::new_normalize(Vector2::new(Complex::one(), Complex::zero()));
             0
-        }
-        else {
-            self.state.x = Complex::zero();
-            self.state.y = Complex::one();
+        } else {
+            self.state = UnitVector2::new_normalize(Vector2::new(Complex::zero(), Complex::one()));
             1
         }
         // Something goofy happened if you get here
         -1
     }
+
+
 }
 
 #[cfg(test)]
