@@ -1,7 +1,8 @@
-use nalgebra::{Complex, Vector2, UnitVector2, Unit, Vector4};
+use nalgebra::{Complex, Vector2, UnitVector2, Unit, Vector4, Normed};
 use num_traits::identities::One;
 use num_traits::Zero;
 use crate::Quaternion::Quaternion;
+use rand::Rng;
 
 pub(crate) struct Qubit {
     pub(crate) state: UnitVector2<Complex<f32>>
@@ -50,6 +51,26 @@ impl Qubit {
             vec.push(Qubit::new_zero_state());
         }
         vec
+    }
+
+    /**
+    Measure individual qubit and collapse quantum state
+    return a zero or 1 corresponding to it's classical state
+    */
+    pub fn measure(&mut self) -> i32{
+        let rng = rand::thread_rng().gen_range(0. .. 1.);
+        if rng <= self.state.x.norm(){
+            self.state.x = Complex::one();
+            self.state.y = Complex::zero();
+            0
+        }
+        else {
+            self.state.x = Complex::zero();
+            self.state.y = Complex::one();
+            1
+        }
+        // Something goofy happened if you get here
+        -1
     }
 }
 

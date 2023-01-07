@@ -15,7 +15,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="" />
+    <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +63,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;Debugger.Rust.DataView&quot;
   }
 }</component>
-  <component name="RunManager" selected="Cargo.Test QuantumCircuit::tests::test_init">
+  <component name="RunManager" selected="Cargo.Test Gates::tests::test_multi_single">
     <configuration name="Test Gates::tests::test_multi_cnot" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="test --package quantum --lib Gates::tests::test_multi_cnot -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -166,10 +168,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test Gates::tests::test_multi_single" />
         <item itemvalue="Cargo.Test QuantumCircuit::tests::test_init" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_h" />
         <item itemvalue="Cargo.Test Qubit::tests::get_from_state_test" />
-        <item itemvalue="Cargo.Test Gates::tests::test_multi_single" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_cnot" />
       </list>
     </recent_temporary>
@@ -190,7 +192,7 @@
       <workItem from="1668780976557" duration="13224000" />
       <workItem from="1671898425732" duration="42409000" />
       <workItem from="1672867571947" duration="3361000" />
-      <workItem from="1672871352308" duration="22067000" />
+      <workItem from="1672871352308" duration="24577000" />
     </task>
     <servers />
   </component>
