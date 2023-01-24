@@ -31,6 +31,22 @@ impl QuantumCircuit {
             }
         }
     }
+
+    pub fn run_with_tracking(&self, register: &mut QuantumRegister) -> Vec<Vec<Qubit>> {
+        let mut ret: Vec<Vec<Qubit>> = vec![];
+        for i  in 0..self.gates.len(){
+            ret.push(register.get_qubit_norms());
+            match self.gates[i].apply(register) {
+                Ok(_) => {
+                    continue
+                }
+                Err(_) => {
+                    print!("Error in applying gate\n")
+                }
+            }
+        }
+        ret
+    }
 }
 
 #[cfg(test)]
@@ -46,22 +62,22 @@ mod tests {
     #[test]
     fn test_init() {
         let num_qubits: i32 = 4;
-        let h1: Gate = Gate::multi_single_qubit_gate(0,num_qubits,Gate::new_identity()).unwrap();
+        let h1: Gate = Gate::multi_single_qubit_gate(0,num_qubits,Gate::new_h()).unwrap();
         let h2: Gate = Gate::multi_single_qubit_gate(1,num_qubits,Gate::new_h()).unwrap();
-        let h3: Gate = Gate::multi_single_qubit_gate(2,num_qubits,Gate::new_h()).unwrap();
+        let h3: Gate = Gate::multi_single_qubit_gate(0,num_qubits,Gate::new_t()).unwrap();
         let gate: Gate = Gate::new_multi_cnot(0, 3, num_qubits);
-        //let gate1: Gate = Gate::new_multi_cnot(1, 3, num_qubits);
+        let gate1: Gate = Gate::new_multi_cnot(1, 3, num_qubits);
 
         let mut circuit: QuantumCircuit = QuantumCircuit::new(h1, num_qubits);
 
         //let gate1: Gate = Gate::multi_single_qubit_gate(2, num_qubits, Gate::new_identity()).unwrap();
         //let gate2: Gate = Gate::multi_single_qubit_gate(1, num_qubits, Gate::new_identity()).unwrap();
-        //let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
+        let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
         circuit.add_gate(h2);
         circuit.add_gate(h3);
         circuit.add_gate(gate);
-        //circuit.add_gate(gate1);
-        //circuit.add_gate(gate2);
+        circuit.add_gate(gate1);
+        circuit.add_gate(gate2);
 
         let q1: Qubit = Qubit::new_one_state();
         let q2: Qubit = Qubit::new_zero_state();
@@ -73,7 +89,7 @@ mod tests {
         register.add(q4);
         print_register(&register);
         print!("\n\n");
-        circuit.run(&mut register);
+        let vec = circuit.run_with_tracking(&mut register);
         print_register(&register);
 
 
@@ -88,7 +104,14 @@ mod tests {
         print!("\n\n");
         print_register(&register);
         print!("\n\nRes: {}", res);
-
+        print!("\n\n");
+        for i in 0..vec.len(){
+            print!("State: {}\n", i);
+            for j in 0..vec[i].len(){
+                print!("Qubit state: {}, {}\n", vec[i][j].state.x, vec[i][j].state.y);
+            }
+            print!("\n\n");
+        }
 
 
     }

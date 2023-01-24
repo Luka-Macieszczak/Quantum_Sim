@@ -94,7 +94,6 @@ impl Matrix {
     where anm is a scalar at index(n, m) in matrix A and B is the 2nd matrix
      */
     pub fn tensor_product(&mut self, m2: &Matrix) -> Matrix {
-        let num_columns: usize = self.rows[0].len()*m2.rows[0].len();
         let num_rows: usize = self.rows.len()*m2.rows.len();
         let mut new_matrix: Matrix = Matrix::new_zero(num_rows);
 

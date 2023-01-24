@@ -70,6 +70,28 @@ impl Gate {
         Self {matrix}
     }
 
+    pub fn new_inverse_qft(num_qubits: i32) -> Self {
+        let k: i32 = (2 as i32).pow(num_qubits as u32) as i32;
+        let mut matrix: Matrix = Matrix::new_zero(k as usize);
+        for i in 0..k{
+            let mut cur_exp: i32 = i;
+            for j in 0..k{
+                if i == 0 || j == 0{
+                    matrix.rows[i as usize][j as usize] = Complex::one() * 1./(k as f32).sqrt();
+                }
+                else {
+                    let mut phase: f32 = 2. * f32::pi() / (k as f32);
+                    print!("cos: {}\n", phase.cos());
+                    let val: Complex<f32> = Complex::from(phase.cos()) + Complex::i() * 1. * Complex::from(phase.sin());
+                    matrix.rows[i as usize][j as usize] = val.powi(cur_exp) * 1./(k as f32).sqrt();
+                    cur_exp += i;
+                    cur_exp %= k;
+                }
+            }
+        }
+        Self {matrix}
+    }
+
     pub fn new_multi_controlled(control_qubit: i32, target_qubit: i32, num_qubits: i32, gate: Gate)  -> Self{
         let identity: Matrix = Matrix::new_identity(2);
         // Outer product of a classical 0 bit in vector representation
@@ -207,7 +229,7 @@ mod tests {
         for i in 0..matrix.rows.len(){
             print!("[ ");
             for j in 0..matrix.rows[i].len(){
-                print!(" {} ", matrix.rows[i][j].re);
+                print!(" {} ", matrix.rows[i][j]);
             }
             print!(" ]\n");
         }
@@ -225,10 +247,11 @@ mod tests {
         //print_matrix(hadamard.matrix);
 
         let pi_gate: Gate = Gate::new_t();
-        //print_matrix(pi_gate.matrix);
-
-        let cnot: Gate = Gate::new_cnot();
-        print_matrix(&cnot.matrix);
+        print_matrix(&pi_gate.matrix);
+        print!("\n\n");
+        // let cnot: Gate = Gate::new_cnot();
+        let qft: Gate = Gate::new_inverse_qft(3);
+        print_matrix(&qft.matrix);
     }
 
     #[test]
