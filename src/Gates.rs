@@ -411,4 +411,25 @@ mod tests {
             }
         }
     }
+
+    #[test]
+    fn test_qft(){
+        let qft: Gate = Gate::new_inverse_qft(3);
+        let h: Gate = Gate::new_multi_h(3);
+        let mut r1: QuantumRegister = QuantumRegister::new_from_int(0, 8);
+        let mut r2: QuantumRegister = QuantumRegister::new_from_int(0, 8);
+        qft.apply(&mut r1);
+        h.apply(&mut r2);
+
+        for i in 0..r1.state.len(){
+            let real_err = (r1.state[i].re - r2.state[i].re).abs();
+            let im_err = (r1.state[i].im - r2.state[i].im).abs();
+
+            if real_err > 0.01 || im_err > 0.01{
+                print!("ERROR\n");
+            }
+
+        }
+
+    }
 }
