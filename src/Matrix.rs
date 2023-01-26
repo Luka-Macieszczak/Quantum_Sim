@@ -111,6 +111,16 @@ impl Matrix {
         new_matrix
     }
 
+    pub fn conjugate_transpose(&mut self){
+        let mut transpose: Matrix = Matrix::new_zero(self.rows.len());
+        for i in 0..self.rows.len(){
+            for j in 0..self.rows.len(){
+                transpose.rows[i][j] = Complex::from(self.rows[j][i].re) + Complex::i() * -1. * Complex::from(self.rows[j][i].im);
+            }
+        }
+        self.rows = transpose.rows;
+    }
+
     pub fn clone(&self) -> Matrix {
         let vec: Vec<Vec<Complex<f32>>> = self.rows.clone();
         Matrix::new(vec)
@@ -228,6 +238,27 @@ mod tests {
         for i in 0..new_matrix2.rows.len(){
             for j in 0..new_matrix2.rows[i].len(){
                 print!("Real: {}\n", new_matrix2.rows[i][j]);
+            }
+        }
+    }
+
+    #[test]
+    pub fn test_conjugate(){
+        let data: Vec<Vec<Complex<f32>>> = vec![vec![Complex::i(), Complex::i() * 2.], vec![Complex::i() * 3., Complex::one() * 4. + Complex::i() * 1.]];
+        let mut matrix:Matrix = Matrix::new(data);
+
+        for i in 0..matrix.rows.len(){
+            for j in 0..matrix.rows[i].len(){
+                print!("Real: {}\n", matrix.rows[i][j]);
+            }
+        }
+        print!("\n\n");
+
+        matrix.conjugate_transpose();
+
+        for i in 0..matrix.rows.len(){
+            for j in 0..matrix.rows[i].len(){
+                print!("Real: {}\n", matrix.rows[i][j]);
             }
         }
     }

@@ -15,7 +15,11 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="" />
+    <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Matrix.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Matrix.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,7 +65,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;Debugger.Rust.DataView&quot;
   }
 }</component>
-  <component name="RunManager" selected="Cargo.Test Gates::tests::test_init">
+  <component name="RunManager" selected="Cargo.Test Matrix::tests::test_conjugate">
     <configuration name="Test Gates::tests::test_init" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="test --package quantum --lib Gates::tests::test_init -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -96,8 +100,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test Gates::tests::test_multi_controlled" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package quantum --lib Gates::tests::test_multi_controlled -- --exact" />
+    <configuration name="Test Gates::tests::test_qft" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package quantum --lib Gates::tests::test_qft -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -113,8 +117,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test Gates::tests::test_multi_h" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package quantum --lib Gates::tests::test_multi_h -- --exact" />
+    <configuration name="Test Matrix::tests::test_conjugate" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package quantum --lib Matrix::tests::test_conjugate -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -166,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Test Matrix::tests::test_conjugate" />
+        <item itemvalue="Cargo.Test Gates::tests::test_qft" />
         <item itemvalue="Cargo.Test Gates::tests::test_init" />
         <item itemvalue="Cargo.Test QuantumCircuit::tests::test_init" />
         <item itemvalue="Cargo.Test Gates::tests::test_multi_cnot" />
-        <item itemvalue="Cargo.Test Gates::tests::test_multi_controlled" />
-        <item itemvalue="Cargo.Test Gates::tests::test_multi_h" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +196,7 @@
       <workItem from="1672867571947" duration="3361000" />
       <workItem from="1672871352308" duration="34735000" />
       <workItem from="1673833443971" duration="51000" />
-      <workItem from="1674176693446" duration="6352000" />
+      <workItem from="1674176693446" duration="8989000" />
     </task>
     <servers />
   </component>

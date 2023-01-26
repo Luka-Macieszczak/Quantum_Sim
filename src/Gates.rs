@@ -70,7 +70,7 @@ impl Gate {
         Self {matrix}
     }
 
-    pub fn new_inverse_qft(num_qubits: i32) -> Self {
+    pub fn new_qft(num_qubits: i32) -> Self {
         let k: i32 = (2 as i32).pow(num_qubits as u32) as i32;
         let mut matrix: Matrix = Matrix::new_zero(k as usize);
         for i in 0..k{
@@ -81,7 +81,6 @@ impl Gate {
                 }
                 else {
                     let mut phase: f32 = 2. * f32::pi() / (k as f32);
-                    print!("cos: {}\n", phase.cos());
                     let val: Complex<f32> = Complex::from(phase.cos()) + Complex::i() * 1. * Complex::from(phase.sin());
                     matrix.rows[i as usize][j as usize] = val.powi(cur_exp) * 1./(k as f32).sqrt();
                     cur_exp += i;
@@ -89,6 +88,12 @@ impl Gate {
                 }
             }
         }
+        Self {matrix}
+    }
+
+    pub fn new_inverse_qft(num_qubits: i32) -> Self {
+        let mut matrix: Matrix = Gate::new_qft(num_qubits).matrix;
+        matrix.conjugate_transpose();
         Self {matrix}
     }
 
@@ -414,7 +419,7 @@ mod tests {
 
     #[test]
     fn test_qft(){
-        let qft: Gate = Gate::new_inverse_qft(3);
+        let qft: Gate = Gate::new_qft(3);
         let h: Gate = Gate::new_multi_h(3);
         let mut r1: QuantumRegister = QuantumRegister::new_from_int(0, 8);
         let mut r2: QuantumRegister = QuantumRegister::new_from_int(0, 8);
@@ -428,6 +433,13 @@ mod tests {
             if real_err > 0.01 || im_err > 0.01{
                 print!("ERROR\n");
             }
+
+        }
+        print!("\n\n");
+        let inv: Gate = Gate::new_inverse_qft(3);
+        inv.apply(&mut r1);
+        for i in 0..r1.state.len(){
+            print!("State: {}\n", r1.state[i]);
 
         }
 
