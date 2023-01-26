@@ -13,3 +13,4 @@
 - Fix up that one method for the multi cnot gate (return a result instead of Self)
 - Make abstract controlled gates
 - https://quantumcomputing.stackexchange.com/questions/17961/matrix-for-u2j-from-shors-algorithm-for-any-a-and-n
+- Get inverse (complex conjugate transpose) of QFT
