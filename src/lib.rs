@@ -4,6 +4,7 @@ mod Gates;
 mod Matrix;
 mod QuantumRegister;
 mod QuantumCircuit;
+mod Euclid;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

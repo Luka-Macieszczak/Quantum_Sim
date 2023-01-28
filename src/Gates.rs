@@ -71,7 +71,7 @@ impl Gate {
     }
 
     pub fn new_qft(num_qubits: i32) -> Self {
-        let k: i32 = (2 as i32).pow(num_qubits as u32) as i32;
+        let k: i32 = 1 << num_qubits;
         let mut matrix: Matrix = Matrix::new_zero(k as usize);
         for i in 0..k{
             let mut cur_exp: i32 = i;
@@ -442,6 +442,8 @@ mod tests {
             print!("State: {}\n", r1.state[i]);
 
         }
+        print!("\n\n");
+        print_matrix(&inv.matrix);
 
     }
 }
