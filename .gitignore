@@ -1,1 +1,3 @@
 /target
+/src/wasm/yew-app/dist
+/src/wasm/yew-app/target

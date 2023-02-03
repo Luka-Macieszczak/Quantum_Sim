@@ -1,10 +1,10 @@
-mod Qubit;
-mod Quaternion;
-mod Gates;
-mod Matrix;
-mod QuantumRegister;
-mod QuantumCircuit;
-mod Euclid;
+pub mod Qubit;
+pub mod Quaternion;
+pub mod Gates;
+pub mod Matrix;
+pub mod QuantumRegister;
+pub mod QuantumCircuit;
+pub mod Euclid;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right

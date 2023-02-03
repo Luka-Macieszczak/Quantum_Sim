@@ -1,8 +1,5 @@
 use crate::Gates::Gate;
 use crate::QuantumRegister::QuantumRegister;
-use num_traits::One;
-use num_traits::Zero;
-use nalgebra::Complex;
 use crate::Qubit::Qubit;
 
 pub(crate) struct QuantumCircuit {

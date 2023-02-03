@@ -1,4 +1,4 @@
-use nalgebra::{Complex, Vector2, UnitVector2, Unit, Vector4, Normed};
+use nalgebra::{Complex, Vector2, UnitVector2, Normed};
 use num_traits::identities::One;
 use num_traits::Zero;
 use crate::Quaternion::Quaternion;

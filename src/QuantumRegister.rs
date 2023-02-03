@@ -97,7 +97,7 @@ impl QuantumRegister {
             for j in 0..self.state.len(){
                 // Need to access pow method
                 let d: i32 = 2;
-                let divider: i32 = (self.state.len() as i32 / d.pow(i as u32 + 1));
+                let divider: i32 = self.state.len() as i32 / d.pow(i as u32 + 1);
 
                 print!("Condition: {}\n", j as i32 / divider);
 
