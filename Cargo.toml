@@ -5,6 +5,14 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "quantum"
+path = "src/lib.rs"
+
+[[bin]]
+name = "your_program_name"
+path = "src/wasm/yew-app/src/main.rs"
+
 [dependencies]
 nalgebra = "0.31.3"
 num-traits = "0.2.15"

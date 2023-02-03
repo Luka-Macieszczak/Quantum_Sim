@@ -1,11 +1,7 @@
-use std::alloc::System;
-use std::error::Error;
-use std::io;
 use nalgebra::{Complex, ComplexField, RealField};
 use num_traits::One;
 use crate::Matrix::Matrix;
 use crate::QuantumRegister::QuantumRegister;
-use crate::Qubit::Qubit;
 use num_traits::Zero;
 
 pub(crate) struct Gate {
@@ -15,7 +11,7 @@ pub(crate) struct Gate {
 impl Gate {
     // Pauli I gate (or classical identity)
     pub fn new_identity() -> Self {
-        let mut matrix: Matrix = Matrix::new_identity(2);
+        let matrix: Matrix = Matrix::new_identity(2);
         Self {matrix}
     }
 
@@ -80,7 +76,7 @@ impl Gate {
                     matrix.rows[i as usize][j as usize] = Complex::one() * 1./(k as f32).sqrt();
                 }
                 else {
-                    let mut phase: f32 = 2. * f32::pi() / (k as f32);
+                    let phase: f32 = 2. * f32::pi() / (k as f32);
                     let val: Complex<f32> = Complex::from(phase.cos()) + Complex::i() * 1. * Complex::from(phase.sin());
                     matrix.rows[i as usize][j as usize] = val.powi(cur_exp) * 1./(k as f32).sqrt();
                     cur_exp += i;
