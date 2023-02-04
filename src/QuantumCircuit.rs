@@ -2,7 +2,7 @@ use crate::Gates::Gate;
 use crate::QuantumRegister::QuantumRegister;
 use crate::Qubit::Qubit;
 
-pub(crate) struct QuantumCircuit {
+pub struct QuantumCircuit {
     gates: Vec<Gate>,
     num_qubits: i32
 }

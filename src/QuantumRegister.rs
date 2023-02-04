@@ -4,7 +4,7 @@ use num_traits::One;
 use num_traits::Zero;
 use rand::Rng;
 
-pub(crate) struct QuantumRegister {
+pub struct QuantumRegister {
     pub state: Unit<DVector<Complex<f32>>>
 }
 
