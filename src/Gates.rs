@@ -2,9 +2,10 @@ use nalgebra::{Complex, ComplexField, RealField};
 use num_traits::One;
 use crate::Matrix::Matrix;
 use crate::QuantumRegister::QuantumRegister;
+use crate::Qubit::Qubit;
 use num_traits::Zero;
 
-pub(crate) struct Gate {
+pub struct Gate {
     matrix: Matrix
 }
 
