@@ -14,12 +14,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="996e635a-0f02-4434-8f37-d65807e647ca" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/wasm/yew-app/src/state_boxes.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Gates.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Gates.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuantumCircuit.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuantumCircuit.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuantumRegister.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuantumRegister.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Qubit.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/Qubit.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wasm/yew-app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/wasm/yew-app/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/wasm/yew-app/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/wasm/yew-app/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wasm/yew-app/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/wasm/yew-app/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,9 +31,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Rust File" />
         <option value="HTML File" />
         <option value="CSS File" />
+        <option value="Rust File" />
       </list>
     </option>
   </component>
@@ -197,7 +196,8 @@
       <workItem from="1673833443971" duration="51000" />
       <workItem from="1674176693446" duration="13573000" />
       <workItem from="1675451398268" duration="3191000" />
-      <workItem from="1675539316161" duration="2664000" />
+      <workItem from="1675539316161" duration="4272000" />
+      <workItem from="1675621872683" duration="1153000" />
     </task>
     <servers />
   </component>
