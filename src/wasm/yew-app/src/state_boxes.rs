@@ -1,5 +1,5 @@
+use nalgebra::{UnitVector2, Complex};
 use yew::prelude::*;
-use nalgebra::Complex;
 pub fn discrete_state_box(state: i32) -> Html{
     html!{
         <div class="zero-state-box">
@@ -8,10 +8,10 @@ pub fn discrete_state_box(state: i32) -> Html{
     }
 }
 
-pub fn quantized_state_box(state: Complex<f32>, a_idx: i32, b_idx: i32) -> Html{
+pub fn quantized_state_box(state: UnitVector2<Complex<f32>>, a_idx: i32, b_idx: i32) -> Html{
     html!{
         <div class="zero-state-box">
-            {"| "}{"ψ"}{" >"}
+            {"| "}{"ψ"}<sub>{format!("{}{}", a_idx,b_idx)}</sub>{" >"}
         </div>
     }
 }

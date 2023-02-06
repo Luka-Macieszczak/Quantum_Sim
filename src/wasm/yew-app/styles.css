@@ -1,9 +1,9 @@
 .zero-state-box {
-    height: 3vh;
-    width: 3vh;
+    height: 8vh;
+    width: 8vh;
     border-width: 2px;
     border-color: black;
     border-style: solid;
     text-align: center;
-    line-height: 3vh;
+    line-height: 8vh;
 }

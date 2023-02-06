@@ -1,8 +1,7 @@
 mod state_boxes;
+mod context;
 
-use nalgebra::{Complex, UnitVector2, Vector2};
-use num_traits::One;
-use num_traits::Zero;
+use nalgebra::{Complex, UnitVector2,};
 use yew::prelude::*;
 
 enum Msg {
@@ -18,7 +17,7 @@ impl Component for CounterComponent {
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        Self {count: 0, qubit_state: vec![vec![UnitVector2::new_normalize(Vector2::new(Complex::one(), Complex::zero()))], vec![UnitVector2::new_normalize(Vector2::new(Complex::one(), Complex::zero()))]]}
+        Self {count: 0, qubit_state: context::create_state(200)}
     }
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
@@ -37,7 +36,7 @@ impl Component for CounterComponent {
                 {state_boxes::discrete_state_box(1)}
 
                 {for self.qubit_state.clone().into_iter().flat_map(|state| state.clone().into_iter().map(|qubit| {
-                    html!{<div >{ format!("{}, {}",qubit.x, qubit.y) }</div>}
+                    html!{<div >{state_boxes::quantized_state_box(qubit, 0, 0)}</div>}
                 }))}
                 
                 <p>{ self.count }</p>
