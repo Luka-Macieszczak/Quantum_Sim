@@ -6,13 +6,13 @@ use crate::Qubit::Qubit;
 use num_traits::Zero;
 
 pub struct Gate {
-    matrix: Matrix
+    pub(crate) matrix: Matrix
 }
 
 impl Gate {
     // Pauli I gate (or classical identity)
-    pub fn new_identity() -> Self {
-        let matrix: Matrix = Matrix::new_identity(2);
+    pub fn new_identity(num_qubits: i32) -> Self {
+        let matrix: Matrix = Matrix::new_identity(1 << num_qubits as usize);
         Self {matrix}
     }
 
@@ -189,6 +189,10 @@ impl Gate {
         for _ in 0..num_qubits-1{
             matrix = matrix.tensor_product(&h_clone);
         }
+        Self {matrix}
+    }
+
+    pub fn new_custom(matrix: Matrix) -> Self{
         Self {matrix}
     }
 
@@ -441,6 +445,7 @@ mod tests {
         }
         print!("\n\n");
         print_matrix(&inv.matrix);
+
 
     }
 }

@@ -3,7 +3,7 @@ use num_traits::Zero;
 use num_traits::One;
 
 
-pub(crate) struct Matrix {
+pub struct Matrix {
     pub rows: Vec<Vec<Complex<f32>>>
 }
 
@@ -12,6 +12,20 @@ impl Matrix {
         Self {
             rows: vec![vec![Complex::zero() ; size] ; size]
         }
+    }
+
+    pub fn new_u(a: i32, N: i32) -> Self {
+        let mut u:  Vec<Vec<Complex<f32>>> = vec![vec![Complex::zero(); (1 << (N as f32).log2().ceil() as i32) as usize];
+                                                  (1 << (N as f32).log2().ceil() as i32) as usize];
+        for i in 0..N as usize {
+            u[i][(a as usize) * i % (N as usize)] = Complex::one();
+        }
+
+        for i in N as usize ..u.len() as usize{
+            u[i][i] = Complex::one();
+        }
+
+        Self {rows: u}
     }
 
     pub fn new_h() -> Self {
@@ -130,7 +144,26 @@ impl Matrix {
 
 #[cfg(test)]
 mod tests {
+    use crate::Gates::Gate;
+    use crate::QuantumRegister::QuantumRegister;
     use super::*;
+
+    fn print_matrix(matrix: &Matrix){
+        for i in 0..matrix.rows.len(){
+            print!("[ ");
+            for j in 0..matrix.rows[i].len(){
+                print!(" {} ", matrix.rows[i][j]);
+            }
+            print!(" ]\n");
+        }
+    }
+
+    fn print_register(register: &QuantumRegister){
+        for i in 0..register.state.len(){
+            print!("Value at index {}: {}\n", i, register.state[i]);
+        }
+        print!("\n");
+    }
 
     #[test]
     fn test_init(){
@@ -247,19 +280,37 @@ mod tests {
         let data: Vec<Vec<Complex<f32>>> = vec![vec![Complex::i(), Complex::i() * 2.], vec![Complex::i() * 3., Complex::one() * 4. + Complex::i() * 1.]];
         let mut matrix:Matrix = Matrix::new(data);
 
-        for i in 0..matrix.rows.len(){
-            for j in 0..matrix.rows[i].len(){
-                print!("Real: {}\n", matrix.rows[i][j]);
-            }
-        }
+        print_matrix(&matrix);
         print!("\n\n");
 
         matrix.conjugate_transpose();
 
-        for i in 0..matrix.rows.len(){
-            for j in 0..matrix.rows[i].len(){
-                print!("Real: {}\n", matrix.rows[i][j]);
-            }
-        }
+        print_matrix(&matrix);
+    }
+
+    #[test]
+    pub fn test_u(){
+        let mut matrix: Matrix = Matrix::new_u(2, 15);
+        let mut register: QuantumRegister = QuantumRegister::new_from_int(1, 16);
+
+        print_matrix(&matrix);
+
+        let u4: Gate = Gate::new_custom(
+           matrix.matrix_multiplication(matrix.clone())
+               .matrix_multiplication(matrix.clone())
+               .matrix_multiplication(matrix.clone())
+        );
+        let u2: Gate = Gate::new_custom(
+            matrix.matrix_multiplication(matrix.clone())
+        );
+        let u: Gate = Gate::new_custom(matrix.clone());
+
+        print_register(&register);
+        u4.apply(&mut register).expect("TODO: panic message");
+        print_register(&register);
+        u2.apply(&mut register).expect("TODO: panic message");
+        print_register(&register);
+        u.apply(&mut register).expect("TODO: panic message");
+        print_register(&register);
     }
 }

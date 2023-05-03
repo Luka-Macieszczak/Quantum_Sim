@@ -12,8 +12,9 @@ impl QuantumCircuit {
         Self {gates: vec![gate], num_qubits}
     }
 
-    pub fn add_gate(&mut self, gate: Gate){
+    pub fn add_gate(&mut self, gate: Gate) -> &mut QuantumCircuit {
         self.gates.push(gate);
+        self
     }
 
     pub fn run(&self, register: &mut QuantumRegister) {
@@ -44,6 +45,15 @@ impl QuantumCircuit {
         }
         ret
     }
+
+    pub fn order_finding(input: i32) -> Self {
+        let num_qubits: i32 = 2 * ((input as f32).log2().floor()) as i32;
+        let hadamard: Gate = Gate::new_custom(
+            Gate::new_multi_h(num_qubits/2).matrix.tensor_product(
+                &Gate::new_identity(num_qubits/2).matrix
+            ));
+        Self{gates: vec![hadamard], num_qubits}
+    }
 }
 
 #[cfg(test)]
@@ -70,11 +80,11 @@ mod tests {
         //let gate1: Gate = Gate::multi_single_qubit_gate(2, num_qubits, Gate::new_identity()).unwrap();
         //let gate2: Gate = Gate::multi_single_qubit_gate(1, num_qubits, Gate::new_identity()).unwrap();
         let gate2: Gate = Gate::new_multi_cnot(2,3,num_qubits);
-        circuit.add_gate(h2);
-        circuit.add_gate(h3);
-        circuit.add_gate(gate);
-        circuit.add_gate(gate1);
-        circuit.add_gate(gate2);
+        circuit.add_gate(h2)
+            .add_gate(h3)
+            .add_gate(gate)
+            .add_gate(gate1)
+            .add_gate(gate2);
 
         let q1: Qubit = Qubit::new_one_state();
         let q2: Qubit = Qubit::new_zero_state();
@@ -111,6 +121,12 @@ mod tests {
         }
 
 
+    }
+
+    #[test]
+    fn order_test() {
+        let circuit: QuantumCircuit = QuantumCircuit::order_finding(4);
+        print!("Quincy")
     }
 
 

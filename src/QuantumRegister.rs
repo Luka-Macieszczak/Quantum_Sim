@@ -98,9 +98,6 @@ impl QuantumRegister {
                 // Need to access pow method
                 let d: i32 = 2;
                 let divider: i32 = self.state.len() as i32 / d.pow(i as u32 + 1);
-
-                print!("Condition: {}\n", j as i32 / divider);
-
                 if (j as i32 / divider) % 2 == 0{
                     x1 += self.state[j].norm();
                 }
@@ -148,7 +145,7 @@ mod tests {
 
     #[test]
     fn test_add() {
-        let qubit: Qubit = Qubit::new_zero_state();
+        let qubit: Qubit = Qubit::new_one_state();
         let mut register: QuantumRegister = QuantumRegister::new(qubit);
         for i in 0..register.state.len(){
             print!("num: {}\n", register.state[i]);
@@ -161,14 +158,16 @@ mod tests {
             print!("num: {}\n", num.re)
         }
         print!("\n\n");
-        let data: Vec<Complex<f32>> = vec![Complex::one(); 2];
-        let qubit: Qubit = Qubit::new_from_vec(data);
+        let qubit: Qubit = Qubit::new_one_state();
+        // assert_eq!(one, register.state.data);
+        register.add(qubit);
+        let qubit: Qubit = Qubit::new_one_state();
         // assert_eq!(one, register.state.data);
         register.add(qubit);
         for num in register.state.iter(){
             print!("num: {}\n", num.re)
         }
-
+        //0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15
 
     }
 }

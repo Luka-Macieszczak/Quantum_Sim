@@ -1,6 +1,8 @@
 use nalgebra::{Complex, Vector2, UnitVector2};
 use num_traits::One;
 use num_traits::Zero;
+
+// Input is number being factored
 pub fn create_state(input: i32) -> Vec<Vec<UnitVector2<Complex<f32>>>>{
     let num_qubits: i32 = ((input as f32).log2().ceil()) as i32;
     let mut data: Vec<Vec<UnitVector2<Complex<f32>>>> = vec![vec![]];
